@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser
+from .models import CustomUser, CodeUpload
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -12,3 +12,15 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomAuthenticationForm(AuthenticationForm):
     class Meta:
         model = CustomUser
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ["username", "email", "profile_picture"]
+
+
+class CodeUploadForm(forms.ModelForm):
+    class Meta:
+        model = CodeUpload
+        fields = ["uploaded_file"]

@@ -6,5 +6,25 @@ Dashboard
 
 {% block content %}
 <h2>Welcome, {{ user.username}}!</h2>
-<p>This is your dashboard. Here, you can review your past code analysis results and upload new code</p>
-{% endblock %}
+
+<h3>Upload Code for Review</h3>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token%}
+  {{form.as_p}}
+  <button type="submit">Upload</button>
+</form>
+
+<h3>Your Uploaded Files</h3>
+<<ul>
+  {% for file in files %}
+  <li>
+    <strong>{{ file.uploaded_file.name|slice:"15:" }}</strong>
+    | Uploaded: {{ file.uploaded_at|date:"M d, Y H:i" }}
+    | <a href="{{ file.uploaded_file.url }}" target="_blank">View</a>
+    | <a href="{{ file.uploaded_file.url }}" download>Download</a>
+  </li>
+  {% empty %}
+  <li>No files uploaded yet.</li>
+  {% endfor %}
+  </ul>
+  {% endblock %}

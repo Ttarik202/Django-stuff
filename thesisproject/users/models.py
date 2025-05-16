@@ -30,6 +30,7 @@ class CodeUpload(models.Model):
 
 
 class CodeAnalysisResult(models.Model):
+    score = models.IntegerField(null=True, blank=True)
     ai_feedback = models.TextField(blank=True, null=True)
     upload = models.OneToOneField(CodeUpload, on_delete=models.CASCADE)
     output = models.TextField()

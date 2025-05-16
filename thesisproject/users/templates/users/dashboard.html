@@ -20,6 +20,10 @@ Dashboard
   <li>
     <strong>{{ file.uploaded_file.name|cut:"uploaded_code/" }}
     </strong>
+    {% if file.analysisresult %}
+    | <span style="color: #555;">Score: <strong>{{ file.analysisresult.score }}</strong>/100</span>
+    {% endif %}
+
     | Uploaded: {{ file.uploaded_at|date:"M d, Y H:i" }}
     | Type: {{ file.file_type|default:"unknown" }}
     | Status: <em>{{ file.status }}</em>

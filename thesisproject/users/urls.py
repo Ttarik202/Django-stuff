@@ -13,5 +13,8 @@ urlpatterns = [
     path("delete-file/<int:file_id>/", views.delete_file,
          name="delete_file"),
     path("previous-reviews/", views.previous_reviews, name="previous_reviews"),
+    path("reanalyze/<int:file_id>/", views.reanalyze_file, name="reanalyze_file"),
+    path('all-database/', views.show_all_models, name='all_models'),
+
 
 ]

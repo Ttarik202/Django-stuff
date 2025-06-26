@@ -97,9 +97,10 @@ def dashboard(request):
                     model = genai.GenerativeModel("models/gemini-1.5-pro")
 
                     prompt = (
-                        "Please review the following Python code and suggest improvements. "
-                        "At the end, give it a code quality score from 0 to 100 (where 100 is excellent code quality).\n\n"
-                        f"{code_content}"
+                        "You are an expert code reviewer. Carefully analyze the following Python code for code quality, security, readability, maintainability, and best practices. "
+                        "List all issues you see clearly. Then give a strict code quality score from 0 to 100 — do NOT be lenient.\n\n"
+                        f"{code_content}\n\n"
+                        "Important: Put the score at the end on a line by itself in the format: Code Quality Score: X/100"
                     )
 
                     response = model.generate_content(prompt)

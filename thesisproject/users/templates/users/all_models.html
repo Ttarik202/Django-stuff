@@ -1,0 +1,15 @@
+<h1>📦 All Database Entries</h1>
+
+{% for model_name, entries in model_data %}
+<h2>{{ model_name }}</h2>
+{% if entries %}
+<ul>
+  {% for item in entries %}
+  <li>{{ item }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No entries found for {{ model_name }}</p>
+{% endif %}
+<hr>
+{% endfor %}

@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}Previous Reviews{% endblock %}
+
+{% block content %}
+<h2>Previous Code Reviews</h2>
+
+{% if files %}
+<ul>
+  {% for file in files %}
+  <li style="margin-bottom: 1.5rem;">
+    <strong>{{ file.uploaded_file.name|cut:"uploaded_code/" }}</strong>
+    {% if file.analysis.score %}
+    <div style="margin-top: 0.25rem;">
+      <strong>Code Quality Score:</strong> {{ file.analysis.score }}/100
+    </div>
+    {% endif %}
+    <span style="font-size: 0.9rem; color: #777;">Status: {{ file.status }}</span>
+    | Uploaded: {{ file.uploaded_at|date:"M d, Y H:i" }}
+    | <a href="{{ file.uploaded_file.url }}" target="_blank">View</a>
+    | <a href="{{ file.uploaded_file.url }}" download>Download</a>
+    | <a href="{% url 'users:delete_file' file.id %}" onclick="return confirm('Delete this file?');">Delete</a>
+    {% if file.file_type == "py" %}
+    | <a href="{% url 'users:reanalyze_file' file.id %}">Reanalyze</a>
+    {% else %}
+    <span style="color: gray; cursor: not-allowed; text-decoration: line-through;">Reanalyze</span>
+    {% endif %}
+    {% if file.analysis %}
+    <div style="margin-top: 0.5rem; padding: 0.5rem; background: #f9f9f9;">
+      <strong>Static Analysis:</strong>
+      <pre>{{ file.analysis.output }}</pre>
+
+      <strong>AI Suggestions:</strong>
+      <pre>{{ file.analysis.ai_feedback }}</pre>
+    </div>
+    {% else %}
+    <div style="color: gray;">No analysis available.</div>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No files reviewed yet.</p>
+{% endif %}
+
+<a href="{% url 'users:dashboard' %}">← Back to Dashboard</a>
+{% endblock %}
